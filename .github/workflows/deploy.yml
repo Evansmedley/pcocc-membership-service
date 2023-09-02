@@ -1,0 +1,18 @@
+name: Deploy PCOCC Membership Service
+run-name: ${{ github.actor }} ran PCOCC Membership Service deployment pipeline
+on: workflow_dispatch
+
+jobs:
+    DeployInfrastructure:
+        runs-on: ubuntu-latest
+        steps:
+            # Build
+            - run: echo ""
+            
+    DeployService:
+        runs-on: ubuntu-latest
+        steps:
+            # Build container
+            - run: echo ""
+
+            
