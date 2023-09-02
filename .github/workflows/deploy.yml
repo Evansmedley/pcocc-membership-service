@@ -3,16 +3,22 @@ run-name: ${{ github.actor }} ran PCOCC Membership Service deployment pipeline
 on: workflow_dispatch
 
 jobs:
-    DeployInfrastructure:
-        runs-on: ubuntu-latest
-        steps:
-            # Build
-            - run: echo ""
-            
     DeployService:
+        environment: PCOCC
         runs-on: ubuntu-latest
         steps:
-            # Build container
-            - run: echo ""
-
+            # Checkout
+            - name: checkout
+              uses: actions/checkout@v3
             
+            # Google cloud auth
+            - id: 'auth'
+              uses: 'google-github-actions/auth@v1'
+              with: 
+                credentials_json: ${{ env.GCLOUD_SERVICE_ACCOUNT_KEY }}
+
+            # Enable gcloud APIs needed
+            - run: gcloud services enable run.googleapis.com --project=pcocc-membership-service
+
+            # Deploy
+            - run: gcloud run deploy --region=us-east1 --project=pcocc-membership-service
